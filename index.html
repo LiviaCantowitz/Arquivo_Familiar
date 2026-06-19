@@ -1021,11 +1021,6 @@
         <h2 class="section-title">Álbuns</h2>
       </div>
 
-      <div class="upload-notice">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <p>Os álbuns serão conectados via <strong>Google Drive</strong> em junho de 2025. Você pode criar os álbuns agora e adicionar as fotos depois.</p>
-      </div>
-
       <div class="album-search-wrap">
         <input class="album-search" id="album-search" type="text" placeholder="pesquisar por nome, evento…" oninput="renderAlbums()">
       </div>
@@ -1138,6 +1133,10 @@ function driveThumb(fileId) {
   return `https://lh3.googleusercontent.com/d/${fileId}=w400`;
 }
 
+function driveDownload(fileId) {
+  return `https://drive.google.com/uc?export=download&id=${fileId}`;
+}
+
 function driveFullImg(fileId) {
   return `https://lh3.googleusercontent.com/d/${fileId}`;
 }
@@ -1228,7 +1227,7 @@ async function renderTimeline() {
       const grid = block.querySelector('.photo-grid');
       const folderPhotos = groups[decade].filter(p => p.label === groups[decade][0].label || true);
       groups[decade].forEach((item, idx) => {
-        const albumPhotos = groups[decade].filter(p => p.label === item.label).map(p => ({ url: driveFullImg(p.id), title: p.label, meta: p.meta }));
+        const albumPhotos = groups[decade].filter(p => p.label === item.label).map(p => ({ url: driveFullImg(p.id), downloadUrl: driveDownload(p.id), title: p.label, meta: p.meta }));
         const albumIdx = albumPhotos.findIndex(p => p.url === driveFullImg(item.id));
         const card = document.createElement('div');
         card.className = 'photo-card';
@@ -1341,6 +1340,16 @@ async function renderAlbums() {
             <p class="album-count">${a.year || '—'}</p>
             <div class="album-family-tags" style="margin-top:6px;">${tags}</div>
           </div>`;
+
+        // busca primeira foto da pasta como capa
+        driveListFiles(a.id).then(files => {
+          const img = files.find(f => f.mimeType && f.mimeType.startsWith('image/'));
+          if (img) {
+            const thumb = card.querySelector('.album-thumb');
+            thumb.innerHTML = `<img src="${driveThumb(img.id)}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">`;
+          }
+        }).catch(() => {});
+
         card.onclick = () => openAlbum(a.id, a.label, a.year);
         grid.appendChild(card);
       });
@@ -1368,7 +1377,7 @@ async function openAlbum(folderId, label, year) {
       document.getElementById('lb-counter').textContent = 'sem fotos ainda';
       return;
     }
-    const photos = images.map(img => ({ url: driveFullImg(img.id), title: label, meta: year || '' }));
+    const photos = images.map(img => ({ url: driveFullImg(img.id), downloadUrl: driveDownload(img.id), title: label, meta: String(year || '') }));
     lbPhotos = photos;
     lbIndex = 0;
     lbShow();
@@ -1563,7 +1572,7 @@ function lbShow() {
   document.getElementById('lb-img').alt = item.title;
   document.getElementById('lb-title').textContent = cleanLabel(item.title);
   document.getElementById('lb-meta').textContent = item.meta || '';
-  document.getElementById('lb-download').href = item.url;
+  document.getElementById('lb-download').href = item.downloadUrl || item.url;
   document.getElementById('lb-counter').textContent = lbPhotos.length > 1 ? `${lbIndex + 1} / ${lbPhotos.length}` : '';
   document.getElementById('lb-prev').disabled = lbIndex === 0;
   document.getElementById('lb-next').disabled = lbIndex === lbPhotos.length - 1;
