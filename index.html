@@ -1027,11 +1027,10 @@
       </div>
 
       <div class="album-search-wrap">
-        <input class="album-search" id="album-search" type="text" placeholder="pesquisar por nome, pessoa, evento…" oninput="renderAlbums()">
+        <input class="album-search" id="album-search" type="text" placeholder="pesquisar por nome, evento…" oninput="renderAlbums()">
       </div>
 
       <div class="album-toolbar">
-        <button class="new-album-btn" onclick="openNewAlbum()">+ novo álbum</button>
         <div class="album-filter-row" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
           <div class="family-filter" style="margin:0;">
             <button class="fam-btn active" onclick="setAlbumFamilyFilter('todos', this)">Todos</button>
@@ -1041,60 +1040,6 @@
           <select id="album-filter-decade" onchange="renderAlbums()">
             <option value="">todas as décadas</option>
           </select>
-        </div>
-      </div>
-
-      <div id="new-album-form" style="display:none;">
-        <div class="new-album-card">
-          <p class="new-album-label">nome do álbum</p>
-          <input class="new-album-input" id="new-album-name" type="text" placeholder="ex: Casamento dos avós">
-
-          <div style="display:flex; gap:10px; margin-top:10px;">
-            <div style="flex:1">
-              <p class="new-album-label">mês</p>
-              <select class="new-album-input" id="new-album-month">
-                <option value="">—</option>
-                <option value="1">Janeiro</option><option value="2">Fevereiro</option>
-                <option value="3">Março</option><option value="4">Abril</option>
-                <option value="5">Maio</option><option value="6">Junho</option>
-                <option value="7">Julho</option><option value="8">Agosto</option>
-                <option value="9">Setembro</option><option value="10">Outubro</option>
-                <option value="11">Novembro</option><option value="12">Dezembro</option>
-              </select>
-            </div>
-            <div style="flex:1">
-              <p class="new-album-label">ano</p>
-              <input class="new-album-input" id="new-album-year" type="number" placeholder="ex: 1968" min="1000" max="2099">
-            </div>
-            <div style="flex:1">
-              <p class="new-album-label">década</p>
-              <input class="new-album-input" id="new-album-decade" type="text" placeholder="automático" readonly>
-            </div>
-          </div>
-
-          <div style="margin-top:10px;">
-            <p class="new-album-label">descrição</p>
-            <textarea class="new-album-input" id="new-album-desc" placeholder="Contexto, história, observações sobre este álbum…" style="resize:vertical;min-height:72px;line-height:1.5;"></textarea>
-          </div>
-
-          <div style="margin-top:10px;">
-            <p class="new-album-label">pessoas no álbum</p>
-            <input class="new-album-input" id="new-album-people" type="text" placeholder="ex: Vovó Rosa, Tio Alberto, Papai">
-            <p style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">separe os nomes por vírgula</p>
-          </div>
-
-          <div style="margin-top:10px;">
-            <p class="new-album-label">família</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <label class="fam-check"><input type="checkbox" id="fam-negrucci" value="Negrucci"> Negrucci</label>
-              <label class="fam-check"><input type="checkbox" id="fam-cantowitz" value="Cantowitz"> Cantowitz</label>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:8px; margin-top:1rem;">
-            <button class="album-save-btn" onclick="saveAlbum()">salvar álbum</button>
-            <button class="album-cancel-btn" onclick="closeNewAlbum()">cancelar</button>
-          </div>
         </div>
       </div>
 
@@ -1110,63 +1055,16 @@
         <h2 class="section-title">Documentos</h2>
       </div>
 
-      <div class="upload-notice">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <p>Recortes de jornal, certificados, cartas e outros documentos serão adicionados em breve.<br>Esta seção preservará a <strong>história em papel</strong> da família.</p>
-      </div>
-
       <div class="album-search-wrap">
-        <input class="album-search" id="doc-search" type="text" placeholder="pesquisar por título, tipo, pessoa, palavra…" oninput="renderDocs()">
+        <input class="album-search" id="doc-search" type="text" placeholder="pesquisar por título, tipo, palavra…" oninput="renderDocs()">
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem;">
-        <div class="doc-categories" style="margin-bottom:0;">
-          <button class="doc-cat-btn active" onclick="filterDocs('todos', this)">Todos</button>
-          <button class="doc-cat-btn" onclick="filterDocs('jornal', this)">Recortes de Jornal</button>
-          <button class="doc-cat-btn" onclick="filterDocs('certificado', this)">Certificados</button>
-          <button class="doc-cat-btn" onclick="filterDocs('carta', this)">Cartas</button>
-          <button class="doc-cat-btn" onclick="filterDocs('outro', this)">Outros</button>
-        </div>
-        <button class="new-album-btn" onclick="openNewDoc()">+ novo documento</button>
-      </div>
-
-      <div id="new-doc-form" style="display:none;">
-        <div class="new-album-card">
-          <p class="new-album-label">título</p>
-          <input class="new-album-input" id="new-doc-title" type="text" placeholder="ex: Certidão de nascimento do avô">
-
-          <div style="display:flex;gap:10px;margin-top:10px;">
-            <div style="flex:1">
-              <p class="new-album-label">tipo</p>
-              <select class="new-album-input" id="new-doc-type">
-                <option value="outro">Outro</option>
-                <option value="jornal">Recorte de Jornal</option>
-                <option value="certificado">Certificado</option>
-                <option value="carta">Carta</option>
-              </select>
-            </div>
-            <div style="flex:1">
-              <p class="new-album-label">ano</p>
-              <input class="new-album-input" id="new-doc-year" type="number" placeholder="ex: 1943" min="1000" max="2099">
-            </div>
-          </div>
-
-          <div style="margin-top:10px;">
-            <p class="new-album-label">descrição</p>
-            <textarea class="new-album-input" id="new-doc-desc" placeholder="Contexto, quem aparece, origem do documento…" style="resize:vertical;min-height:72px;line-height:1.5;"></textarea>
-          </div>
-
-          <div style="margin-top:10px;">
-            <p class="new-album-label">pessoas mencionadas</p>
-            <input class="new-album-input" id="new-doc-people" type="text" placeholder="ex: Vovó Rosa, Tio Alberto">
-            <p style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">separe os nomes por vírgula</p>
-          </div>
-
-          <div style="display:flex;gap:8px;margin-top:1rem;">
-            <button class="album-save-btn" onclick="saveDoc()">salvar documento</button>
-            <button class="album-cancel-btn" onclick="closeNewDoc()">cancelar</button>
-          </div>
-        </div>
+      <div class="doc-categories">
+        <button class="doc-cat-btn active" onclick="filterDocs('todos', this)">Todos</button>
+        <button class="doc-cat-btn" onclick="filterDocs('jornal', this)">Recortes de Jornal</button>
+        <button class="doc-cat-btn" onclick="filterDocs('certificado', this)">Certificados</button>
+        <button class="doc-cat-btn" onclick="filterDocs('carta', this)">Cartas</button>
+        <button class="doc-cat-btn" onclick="filterDocs('outro', this)">Outros</button>
       </div>
 
       <div class="doc-grid" id="doc-grid"></div>
@@ -1181,40 +1079,8 @@
         <h2 class="section-title">Vídeos</h2>
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem;">
-        <div class="album-search-wrap" style="flex:1;margin:0;">
-          <input class="album-search" id="video-search" type="text" placeholder="pesquisar por título, descrição…" oninput="renderVideos()">
-        </div>
-        <button class="new-album-btn" onclick="openNewVideo()">+ novo vídeo</button>
-      </div>
-
-      <div id="new-video-form" style="display:none;">
-        <div class="new-album-card">
-          <p class="new-album-label">título</p>
-          <input class="new-album-input" id="new-video-title" type="text" placeholder="ex: Festa de Natal 1978">
-
-          <div style="margin-top:10px;">
-            <p class="new-album-label">link do YouTube</p>
-            <input class="new-album-input" id="new-video-url" type="text" placeholder="https://www.youtube.com/watch?v=...">
-          </div>
-
-          <div style="display:flex;gap:10px;margin-top:10px;">
-            <div style="flex:1">
-              <p class="new-album-label">ano</p>
-              <input class="new-album-input" id="new-video-year" type="number" placeholder="ex: 1978" min="1000" max="2099">
-            </div>
-          </div>
-
-          <div style="margin-top:10px;">
-            <p class="new-album-label">legenda / descrição</p>
-            <textarea class="new-album-input" id="new-video-desc" placeholder="Contexto, quem aparece, ocasião…" style="resize:vertical;min-height:72px;line-height:1.5;"></textarea>
-          </div>
-
-          <div style="display:flex;gap:8px;margin-top:1rem;">
-            <button class="album-save-btn" onclick="saveVideo()">salvar vídeo</button>
-            <button class="album-cancel-btn" onclick="closeNewVideo()">cancelar</button>
-          </div>
-        </div>
+      <div class="album-search-wrap">
+        <input class="album-search" id="video-search" type="text" placeholder="pesquisar por título…" oninput="renderVideos()">
       </div>
 
       <div id="video-grid" class="video-grid"></div>
@@ -1402,178 +1268,146 @@ function setAlbumFamilyFilter(val, btn) {
 
 renderTimeline();
 
-// ── ÁLBUNS ──
-let albums = JSON.parse(localStorage.getItem('nc_albums') || '[]');
+// ── ÁLBUNS — do Google Drive ──
+const DRIVE_FOTOS_FOLDER = 'Fotos';
+const DRIVE_DOCS_FOLDER = 'Documentos';
 
-function decadeOf(year) {
-  if (!year) return 'sem data';
-  return Math.floor(year / 10) * 10 + 's';
+async function getFolderIdByName(parentId, name) {
+  const files = await driveListFiles(parentId, 'application/vnd.google-apps.folder');
+  const found = files.find(f => f.name === name);
+  return found ? found.id : null;
 }
 
-function saveAlbumsToStorage() {
-  localStorage.setItem('nc_albums', JSON.stringify(albums));
-}
-
-function openNewAlbum() {
-  document.getElementById('new-album-form').style.display = 'block';
-  document.getElementById('new-album-name').focus();
-}
-
-function closeNewAlbum() {
-  document.getElementById('new-album-form').style.display = 'none';
-  document.getElementById('new-album-name').value = '';
-  document.getElementById('new-album-month').value = '';
-  document.getElementById('new-album-year').value = '';
-  document.getElementById('new-album-decade').value = '';
-  document.getElementById('new-album-desc').value = '';
-  document.getElementById('new-album-people').value = '';
-  document.getElementById('fam-negrucci').checked = false;
-  document.getElementById('fam-cantowitz').checked = false;
-}
-
-document.getElementById('new-album-year').addEventListener('input', function() {
-  const y = parseInt(this.value);
-  document.getElementById('new-album-decade').value = (!isNaN(y) && y >= 1000) ? decadeOf(y) : '';
-});
-
-function saveAlbum() {
-  const name = document.getElementById('new-album-name').value.trim();
-  const month = parseInt(document.getElementById('new-album-month').value) || null;
-  const year = parseInt(document.getElementById('new-album-year').value) || null;
-  const desc = document.getElementById('new-album-desc').value.trim();
-  const peopleRaw = document.getElementById('new-album-people').value;
-  const people = peopleRaw.split(',').map(p => p.trim()).filter(Boolean);
-  const families = [];
-  if (document.getElementById('fam-negrucci').checked) families.push('Negrucci');
-  if (document.getElementById('fam-cantowitz').checked) families.push('Cantowitz');
-  if (!name) { document.getElementById('new-album-name').focus(); return; }
-  albums.push({ id: Date.now(), name, month, year, decade: decadeOf(year), desc, people, families });
-  saveAlbumsToStorage();
-  closeNewAlbum();
-  renderAlbums();
-}
-
-function deleteAlbum(id) {
-  albums = albums.filter(a => a.id !== id);
-  saveAlbumsToStorage();
-  renderAlbums();
-}
-
-function renderAlbums() {
-  const filterDecade = document.getElementById('album-filter-decade').value;
-  const query = (document.getElementById('album-search').value || '').toLowerCase().trim();
+async function renderAlbums() {
   const container = document.getElementById('album-decade-groups');
-  container.innerHTML = '';
+  container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">carregando álbuns…</p>';
 
-  let filtered = albums;
+  try {
+    const fotosId = await getFolderIdByName(DRIVE_ROOT_ID, DRIVE_FOTOS_FOLDER) || DRIVE_ROOT_ID;
+    const folders = await driveListFiles(fotosId, 'application/vnd.google-apps.folder');
 
-  if (albumFamilyFilter !== 'todos') {
-    filtered = filtered.filter(a => a.families && a.families.includes(albumFamilyFilter));
-  }
-  if (filterDecade) {
-    filtered = filtered.filter(a => a.decade === filterDecade);
-  }
-  if (query) {
-    filtered = filtered.filter(a => {
-      const haystack = [
-        a.name,
-        a.desc,
-        ...(a.people || []),
-        ...(a.families || []),
-        a.year ? String(a.year) : '',
-      ].join(' ').toLowerCase();
-      return query.split(' ').every(word => haystack.includes(word));
+    const query = (document.getElementById('album-search').value || '').toLowerCase().trim();
+    const filterDecade = document.getElementById('album-filter-decade').value;
+
+    let albums = folders.map(f => {
+      const yearMatch = f.name.match(/\b(1[89]\d{2}|20\d{2})\b/);
+      const year = yearMatch ? parseInt(yearMatch[1]) : null;
+      const hasNegrucci = /Negrucci/i.test(f.name);
+      const hasCantowitz = /Cantowitz/i.test(f.name);
+      const families = [];
+      if (hasNegrucci) families.push('Negrucci');
+      if (hasCantowitz) families.push('Cantowitz');
+      return { id: f.id, name: f.name, label: cleanLabel(f.name), year, decade: year ? Math.floor(year/10)*10+'s' : 'sem data', families };
     });
-  }
 
-  const groups = {};
-  filtered.forEach(a => {
-    if (!groups[a.decade]) groups[a.decade] = [];
-    groups[a.decade].push(a);
-  });
+    if (albumFamilyFilter !== 'todos') albums = albums.filter(a => a.families.includes(albumFamilyFilter));
+    if (filterDecade) albums = albums.filter(a => a.decade === filterDecade);
+    if (query) albums = albums.filter(a => (a.label + ' ' + a.name).toLowerCase().includes(query));
 
-  const sortedDecades = Object.keys(groups).sort((a, b) => {
-    if (a === 'sem data') return 1;
-    if (b === 'sem data') return -1;
-    return parseInt(a) - parseInt(b);
-  });
+    container.innerHTML = '';
 
-  if (sortedDecades.length === 0) {
-    container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum álbum encontrado.</p>';
-    updateDecadeFilter();
-    return;
-  }
+    if (albums.length === 0) {
+      container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum álbum encontrado.</p>';
+      updateDecadeFilterDrive(folders);
+      return;
+    }
 
-  const monthNames = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    const groups = {};
+    albums.forEach(a => {
+      if (!groups[a.decade]) groups[a.decade] = [];
+      groups[a.decade].push(a);
+    });
 
-  sortedDecades.forEach(decade => {
-    const section = document.createElement('div');
-    section.className = 'album-decade-section';
-    section.innerHTML = `<div class="decade-label"><span>${decade}</span></div><div class="album-grid"></div>`;
-    container.appendChild(section);
-
-    const grid = section.querySelector('.album-grid');
-    groups[decade]
-      .sort((a, b) => {
-        const ya = a.year || 9999, yb = b.year || 9999;
-        if (ya !== yb) return ya - yb;
-        return (a.month || 13) - (b.month || 13);
-      })
-      .forEach(a => {
-        const tags = (a.families && a.families.length)
-          ? a.families.map(f => `<span class="fam-tag ${f.toLowerCase()}">${f}</span>`).join('')
-          : '';
-        const dateLine = [a.month ? monthNames[a.month] : null, a.year].filter(Boolean).join(' ');
-        const peopleLine = a.people && a.people.length
-          ? `<p class="album-people"><span>pessoas:</span> ${a.people.join(', ')}</p>`
-          : '';
-        const descLine = a.desc
-          ? `<p class="album-desc">${a.desc}</p>`
-          : '';
-
+    Object.keys(groups).sort((a,b) => {
+      if (a==='sem data') return 1; if (b==='sem data') return -1;
+      return parseInt(a)-parseInt(b);
+    }).forEach(decade => {
+      const section = document.createElement('div');
+      section.className = 'album-decade-section';
+      section.innerHTML = `<div class="decade-label"><span>${decade}</span></div><div class="album-grid"></div>`;
+      container.appendChild(section);
+      const grid = section.querySelector('.album-grid');
+      groups[decade].sort((a,b) => (a.year||9999)-(b.year||9999)).forEach(a => {
+        const tags = a.families.map(f => `<span class="fam-tag ${f.toLowerCase()}">${f}</span>`).join('');
         const card = document.createElement('div');
         card.className = 'album-card';
-        card.style.position = 'relative';
+        card.style.cursor = 'pointer';
         card.innerHTML = `
-          <button onclick="deleteAlbum(${a.id})" style="position:absolute;top:8px;right:8px;background:rgba(44,26,14,0.5);border:none;color:var(--cream);width:22px;height:22px;border-radius:50%;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;line-height:1;">×</button>
           <div class="album-thumb">
             <div class="album-thumb-stack"><div></div><div></div><div></div></div>
           </div>
           <div class="album-info">
-            <p class="album-name">${a.name}</p>
-            <p class="album-count">${dateLine ? dateLine + ' · ' : ''}fotos a adicionar</p>
-            ${descLine}
-            ${peopleLine}
+            <p class="album-name">${a.label}</p>
+            <p class="album-count">${a.year || '—'}</p>
             <div class="album-family-tags" style="margin-top:6px;">${tags}</div>
           </div>`;
+        card.onclick = () => openAlbum(a.id, a.label, a.year);
         grid.appendChild(card);
       });
-  });
+    });
 
-  updateDecadeFilter();
+    updateDecadeFilterDrive(folders);
+  } catch(e) {
+    container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">erro ao carregar álbuns.</p>';
+    console.error(e);
+  }
 }
 
-function updateDecadeFilter() {
+async function openAlbum(folderId, label, year) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lb-title').textContent = label;
+  document.getElementById('lb-meta').textContent = year || '';
+  document.getElementById('lb-counter').textContent = 'carregando…';
+  document.getElementById('lb-img').src = '';
+  lb.classList.add('open');
+
+  try {
+    const files = await driveListFiles(folderId);
+    const images = files.filter(f => f.mimeType && f.mimeType.startsWith('image/'));
+    if (images.length === 0) {
+      document.getElementById('lb-counter').textContent = 'sem fotos ainda';
+      return;
+    }
+    const photos = images.map(img => ({ url: driveFullImg(img.id), title: label, meta: year || '' }));
+    lbPhotos = photos;
+    lbIndex = 0;
+    lbShow();
+  } catch(e) { console.error(e); }
+}
+
+function updateDecadeFilterDrive(folders) {
   const sel = document.getElementById('album-filter-decade');
   const current = sel.value;
-  const decades = [...new Set(albums.map(a => a.decade))].sort((a,b) => {
-    if (a==='sem data') return 1; if (b==='sem data') return -1;
-    return parseInt(a)-parseInt(b);
-  });
+  const decades = [...new Set(folders.map(f => {
+    const m = f.name.match(/\b(1[89]\d{2}|20\d{2})\b/);
+    return m ? Math.floor(parseInt(m[1])/10)*10+'s' : 'sem data';
+  }))].sort((a,b) => { if(a==='sem data') return 1; if(b==='sem data') return -1; return parseInt(a)-parseInt(b); });
   sel.innerHTML = '<option value="">todas as décadas</option>';
   decades.forEach(d => {
     const opt = document.createElement('option');
     opt.value = d; opt.textContent = d;
-    if (d === current) opt.selected = true;
+    if (d===current) opt.selected = true;
     sel.appendChild(opt);
   });
 }
 
 renderAlbums();
 
-// ── DOCUMENTOS ──
-let docs = JSON.parse(localStorage.getItem('nc_docs') || '[]');
+// ── DOCUMENTOS — do Google Drive ──
 let docCatFilter = 'todos';
+
+const docTypeMap = {
+  jornal: /jornal|recorte/i,
+  certificado: /certid|diploma|certificado/i,
+  carta: /carta|correspondencia/i,
+};
+
+function guessDocType(name) {
+  for (const [type, rx] of Object.entries(docTypeMap)) {
+    if (rx.test(name)) return type;
+  }
+  return 'outro';
+}
 
 const typeLabels = { jornal: 'Recorte de Jornal', certificado: 'Certificado', carta: 'Carta', outro: 'Outro' };
 
@@ -1584,158 +1418,117 @@ function filterDocs(cat, btn) {
   renderDocs();
 }
 
-function openNewDoc() {
-  document.getElementById('new-doc-form').style.display = 'block';
-  document.getElementById('new-doc-title').focus();
-}
-
-function closeNewDoc() {
-  document.getElementById('new-doc-form').style.display = 'none';
-  document.getElementById('new-doc-title').value = '';
-  document.getElementById('new-doc-type').value = 'outro';
-  document.getElementById('new-doc-year').value = '';
-  document.getElementById('new-doc-desc').value = '';
-  document.getElementById('new-doc-people').value = '';
-}
-
-function saveDoc() {
-  const title = document.getElementById('new-doc-title').value.trim();
-  const type = document.getElementById('new-doc-type').value;
-  const year = parseInt(document.getElementById('new-doc-year').value) || null;
-  const desc = document.getElementById('new-doc-desc').value.trim();
-  const peopleRaw = document.getElementById('new-doc-people').value;
-  const people = peopleRaw.split(',').map(p => p.trim()).filter(Boolean);
-  if (!title) { document.getElementById('new-doc-title').focus(); return; }
-  docs.push({ id: Date.now(), title, type, year, desc, people });
-  localStorage.setItem('nc_docs', JSON.stringify(docs));
-  closeNewDoc();
-  renderDocs();
-}
-
-function deleteDoc(id) {
-  docs = docs.filter(d => d.id !== id);
-  localStorage.setItem('nc_docs', JSON.stringify(docs));
-  renderDocs();
-}
-
-function renderDocs() {
+async function renderDocs() {
   const query = (document.getElementById('doc-search').value || '').toLowerCase().trim();
   const grid = document.getElementById('doc-grid');
-  grid.innerHTML = '';
+  grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">carregando documentos…</p>';
 
-  let filtered = docs;
-  if (docCatFilter !== 'todos') filtered = filtered.filter(d => d.type === docCatFilter);
-  if (query) {
-    filtered = filtered.filter(d => {
-      const haystack = [d.title, d.desc, ...(d.people || []), d.type, d.year ? String(d.year) : ''].join(' ').toLowerCase();
-      return query.split(' ').every(w => haystack.includes(w));
+  try {
+    const docsId = await getFolderIdByName(DRIVE_ROOT_ID, DRIVE_DOCS_FOLDER);
+    if (!docsId) {
+      grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">pasta "Documentos" não encontrada no Drive.</p>';
+      return;
+    }
+    const files = await driveListFiles(docsId);
+    let docs = files.filter(f => f.mimeType !== 'application/vnd.google-apps.folder').map(f => {
+      const yearMatch = f.name.match(/\b(1[89]\d{2}|20\d{2})\b/);
+      const year = yearMatch ? parseInt(yearMatch[1]) : null;
+      const type = guessDocType(f.name);
+      return { id: f.id, name: f.name, label: cleanLabel(f.name), year, type, mimeType: f.mimeType };
     });
-  }
 
-  if (filtered.length === 0) {
-    grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum documento encontrado.</p>';
-    return;
-  }
+    if (docCatFilter !== 'todos') docs = docs.filter(d => d.type === docCatFilter);
+    if (query) docs = docs.filter(d => (d.label+' '+d.name).toLowerCase().includes(query));
 
-  filtered.sort((a, b) => (a.year || 9999) - (b.year || 9999)).forEach(d => {
-    const card = document.createElement('div');
-    card.className = 'doc-card';
-    card.style.position = 'relative';
-    const peopleLine = d.people && d.people.length
-      ? `<p class="album-people" style="margin-top:4px;"><span>pessoas:</span> ${d.people.join(', ')}</p>` : '';
-    const descLine = d.desc ? `<p class="album-desc" style="margin-top:4px;">${d.desc}</p>` : '';
-    card.innerHTML = `
-      <button onclick="deleteDoc(${d.id})" style="position:absolute;top:8px;right:8px;background:rgba(44,26,14,0.5);border:none;color:var(--cream);width:22px;height:22px;border-radius:50%;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;line-height:1;">×</button>
-      <div class="doc-thumb">
-        <div class="doc-icon">
-          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    grid.innerHTML = '';
+    if (docs.length === 0) {
+      grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum documento encontrado.</p>';
+      return;
+    }
+
+    docs.sort((a,b) => (a.year||9999)-(b.year||9999)).forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'doc-card';
+      card.innerHTML = `
+        <div class="doc-thumb">
+          <div class="doc-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <span class="doc-type-badge">${typeLabels[d.type]}</span>
         </div>
-        <span class="doc-type-badge">${typeLabels[d.type] || 'Outro'}</span>
-      </div>
-      <div class="doc-info">
-        <p class="doc-name">${d.title}</p>
-        <p class="doc-date">${d.year || '—'}</p>
-        ${descLine}
-        ${peopleLine}
-      </div>`;
-    grid.appendChild(card);
-  });
+        <div class="doc-info">
+          <p class="doc-name">${d.label}</p>
+          <p class="doc-date">${d.year || '—'}</p>
+          <a href="https://drive.google.com/file/d/${d.id}/view" target="_blank" style="font-size:0.72rem;color:var(--brown);text-decoration:none;margin-top:4px;display:inline-block;">↗ abrir documento</a>
+        </div>`;
+      grid.appendChild(card);
+    });
+  } catch(e) {
+    grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">erro ao carregar documentos.</p>';
+    console.error(e);
+  }
 }
 
 renderDocs();
 
-// ── VÍDEOS ──
-let videos = JSON.parse(localStorage.getItem('nc_videos') || '[]');
+// ── VÍDEOS — do videos.txt no Drive ──
+async function renderVideos() {
+  const query = (document.getElementById('video-search').value || '').toLowerCase().trim();
+  const grid = document.getElementById('video-grid');
+  grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">carregando vídeos…</p>';
 
+  try {
+    // busca videos.txt na raiz
+    const files = await driveListFiles(DRIVE_ROOT_ID);
+    const txtFile = files.find(f => f.name === 'videos.txt');
+
+    if (!txtFile) {
+      grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum vídeo adicionado ainda. Crie um arquivo "videos.txt" no Drive.</p>';
+      return;
+    }
+
+    const res = await fetch(`https://www.googleapis.com/drive/v3/files/${txtFile.id}?alt=media&key=${DRIVE_API_KEY}`);
+    const text = await res.text();
+
+    let videos = text.split('\n').map(line => line.trim()).filter(Boolean).map(line => {
+      const [meta, url] = line.split('|');
+      if (!meta || !url) return null;
+      const yearMatch = meta.match(/\b(1[89]\d{2}|20\d{2})\b/);
+      const year = yearMatch ? parseInt(yearMatch[1]) : null;
+      const vid = getYouTubeId(url.trim());
+      if (!vid) return null;
+      return { vid, label: cleanLabel(meta), year };
+    }).filter(Boolean);
+
+    if (query) videos = videos.filter(v => (v.label + ' ' + (v.year||'')).toLowerCase().includes(query));
+
+    grid.innerHTML = '';
+    if (videos.length === 0) {
+      grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum vídeo encontrado.</p>';
+      return;
+    }
+
+    videos.sort((a,b) => (a.year||9999)-(b.year||9999)).forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.innerHTML = `
+        <iframe class="video-embed" src="https://www.youtube.com/embed/${v.vid}" allowfullscreen loading="lazy"></iframe>
+        <div class="video-info">
+          <p class="video-title">${v.label}</p>
+          ${v.year ? `<p class="video-year">${v.year}</p>` : ''}
+        </div>`;
+      grid.appendChild(card);
+    });
+  } catch(e) {
+    grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">erro ao carregar vídeos.</p>';
+    console.error(e);
+  }
+}
+
+// ── VÍDEOS ──
 function getYouTubeId(url) {
   const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
   return match ? match[1] : null;
-}
-
-function openNewVideo() {
-  document.getElementById('new-video-form').style.display = 'block';
-  document.getElementById('new-video-title').focus();
-}
-
-function closeNewVideo() {
-  document.getElementById('new-video-form').style.display = 'none';
-  document.getElementById('new-video-title').value = '';
-  document.getElementById('new-video-url').value = '';
-  document.getElementById('new-video-year').value = '';
-  document.getElementById('new-video-desc').value = '';
-}
-
-function saveVideo() {
-  const title = document.getElementById('new-video-title').value.trim();
-  const url = document.getElementById('new-video-url').value.trim();
-  const year = parseInt(document.getElementById('new-video-year').value) || null;
-  const desc = document.getElementById('new-video-desc').value.trim();
-  if (!title || !url) { return; }
-  const vid = getYouTubeId(url);
-  if (!vid) { alert('Link do YouTube inválido.'); return; }
-  videos.push({ id: Date.now(), title, vid, year, desc });
-  localStorage.setItem('nc_videos', JSON.stringify(videos));
-  closeNewVideo();
-  renderVideos();
-}
-
-function deleteVideo(id) {
-  videos = videos.filter(v => v.id !== id);
-  localStorage.setItem('nc_videos', JSON.stringify(videos));
-  renderVideos();
-}
-
-function renderVideos() {
-  const query = (document.getElementById('video-search').value || '').toLowerCase().trim();
-  const grid = document.getElementById('video-grid');
-  grid.innerHTML = '';
-
-  let filtered = videos;
-  if (query) {
-    filtered = filtered.filter(v => {
-      const h = [v.title, v.desc, v.year ? String(v.year) : ''].join(' ').toLowerCase();
-      return query.split(' ').every(w => h.includes(w));
-    });
-  }
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum vídeo adicionado ainda.</p>';
-    return;
-  }
-
-  filtered.sort((a, b) => (a.year || 9999) - (b.year || 9999)).forEach(v => {
-    const card = document.createElement('div');
-    card.className = 'video-card';
-    card.innerHTML = `
-      <button onclick="deleteVideo(${v.id})" style="position:absolute;top:8px;right:8px;background:rgba(44,26,14,0.7);border:none;color:var(--cream);width:22px;height:22px;border-radius:50%;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;line-height:1;">×</button>
-      <iframe class="video-embed" src="https://www.youtube.com/embed/${v.vid}" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <p class="video-title">${v.title}</p>
-        ${v.year ? `<p class="video-year">${v.year}</p>` : ''}
-        ${v.desc ? `<p class="video-desc">${v.desc}</p>` : ''}
-      </div>`;
-    grid.appendChild(card);
-  });
 }
 
 renderVideos();
