@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Negrucci Cantowitz — Arquivo Familiar</title>
+<title>Arquivos da Família</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -790,6 +790,76 @@
     font-style: normal;
   }
 
+  .footer-comment-btn {
+    display: inline-block;
+    margin-top: 1.25rem;
+    background: transparent;
+    border: 1px solid var(--brown);
+    color: var(--brown-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .footer-comment-btn:hover {
+    background: var(--brown);
+    color: var(--cream);
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .video-card {
+    background: var(--warm-white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .video-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44,26,14,0.1);
+  }
+
+  .video-embed {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+    display: block;
+  }
+
+  .video-info { padding: 0.9rem 1rem; }
+
+  .video-title {
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .video-year {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .video-desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
   /* ── FOOTER ── */
   footer {
     background: var(--espresso);
@@ -842,8 +912,8 @@
     <div class="lock-ornament">
       <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
     </div>
-    <h1 class="lock-title">Negrucci Cantowitz</h1>
-    <p class="lock-subtitle">Arquivo Familiar</p>
+    <h1 class="lock-title">Arquivos da Família</h1>
+    <p class="lock-subtitle">Preservando memórias</p>
     <input class="lock-input" type="password" id="pwd-input" placeholder="senha" onkeydown="if(event.key==='Enter')checkPwd()">
     <button class="lock-btn" onclick="checkPwd()">Entrar</button>
     <p class="lock-error" id="pwd-error"></p>
@@ -854,18 +924,19 @@
 <div id="main">
 
   <header>
-    <div class="logo">Negrucci Cantowitz</div>
+    <div class="logo">Arquivos da Família</div>
     <nav>
       <button class="active" onclick="showTab('timeline', this)">Linha do Tempo</button>
       <button onclick="showTab('albums', this)">Álbuns</button>
       <button onclick="showTab('docs', this)">Documentos</button>
+      <button onclick="showTab('videos', this)">Vídeos</button>
     </nav>
   </header>
 
   <div class="hero">
-    <h2 class="hero-title fade-up">Negrucci Cantowitz</h2>
+    <h2 class="hero-title fade-up">Arquivos da Família</h2>
     <div class="hero-divider fade-up-2"></div>
-    <p class="hero-sub fade-up-2">Um arquivo familiar</p>
+    <p class="hero-sub fade-up-2">Preservando memórias</p>
   </div>
 
   <!-- LINHA DO TEMPO -->
@@ -874,11 +945,6 @@
       <div class="section-header">
         <p class="section-eyebrow">navegue pelo tempo</p>
         <h2 class="section-title">Linha do Tempo</h2>
-      </div>
-
-      <div class="upload-notice">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <p>As fotos serão conectadas via <strong>Google Drive</strong> em junho de 2025.<br>Por enquanto o acervo aguarda seu primeiro capítulo.</p>
       </div>
 
       <div class="family-filter">
@@ -1051,9 +1117,58 @@
     </div>
   </div>
 
+  <!-- VÍDEOS -->
+  <div id="tab-videos" class="tab-section">
+    <div class="docs-wrap">
+      <div class="section-header">
+        <p class="section-eyebrow">memórias em movimento</p>
+        <h2 class="section-title">Vídeos</h2>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem;">
+        <div class="album-search-wrap" style="flex:1;margin:0;">
+          <input class="album-search" id="video-search" type="text" placeholder="pesquisar por título, descrição…" oninput="renderVideos()">
+        </div>
+        <button class="new-album-btn" onclick="openNewVideo()">+ novo vídeo</button>
+      </div>
+
+      <div id="new-video-form" style="display:none;">
+        <div class="new-album-card">
+          <p class="new-album-label">título</p>
+          <input class="new-album-input" id="new-video-title" type="text" placeholder="ex: Festa de Natal 1978">
+
+          <div style="margin-top:10px;">
+            <p class="new-album-label">link do YouTube</p>
+            <input class="new-album-input" id="new-video-url" type="text" placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:10px;">
+            <div style="flex:1">
+              <p class="new-album-label">ano</p>
+              <input class="new-album-input" id="new-video-year" type="number" placeholder="ex: 1978" min="1000" max="2099">
+            </div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <p class="new-album-label">legenda / descrição</p>
+            <textarea class="new-album-input" id="new-video-desc" placeholder="Contexto, quem aparece, ocasião…" style="resize:vertical;min-height:72px;line-height:1.5;"></textarea>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:1rem;">
+            <button class="album-save-btn" onclick="saveVideo()">salvar vídeo</button>
+            <button class="album-cancel-btn" onclick="closeNewVideo()">cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="video-grid" class="video-grid"></div>
+    </div>
+  </div>
+
   <footer>
-    <p class="footer-title">Negrucci Cantowitz</p>
-    <p class="footer-sub">um arquivo familiar</p>
+    <p class="footer-title">Arquivos da Família</p>
+    <p class="footer-sub">preservando memórias</p>
+    <a class="footer-comment-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdUiF_JGSxJK0HpERxrDm01qfDNcfiVuM9GQo13b5NGgri0Lg/viewform?usp=publish-editor" target="_blank">💬 Deixe um comentário ou sugestão</a>
   </footer>
 
 </div>
@@ -1073,6 +1188,27 @@
 <script>
 // ── SENHA ──
 const SENHA = "livia2000";
+
+// ── GOOGLE DRIVE CONFIG ──
+const DRIVE_API_KEY = 'AIzaSyBvETlRflWp6nktwIdXQZuCk5bUvP3dVpM';
+const DRIVE_ROOT_ID = '1ioaMIT94ArBKU8G0yFD-I2U5bJ__w-aT';
+
+async function driveListFiles(folderId, mimeType = null) {
+  let q = `'${folderId}' in parents and trashed = false`;
+  if (mimeType) q += ` and mimeType = '${mimeType}'`;
+  const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&key=${DRIVE_API_KEY}&fields=files(id,name,mimeType,thumbnailLink,imageMediaMetadata)&pageSize=200`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.files || [];
+}
+
+function driveThumb(fileId) {
+  return `https://lh3.googleusercontent.com/d/${fileId}=w400`;
+}
+
+function driveFullImg(fileId) {
+  return `https://lh3.googleusercontent.com/d/${fileId}`;
+}
 
 function checkPwd() {
   const val = document.getElementById('pwd-input').value;
@@ -1096,69 +1232,79 @@ function showTab(id, btn) {
   btn.classList.add('active');
 }
 
-// ── RENDERIZA LINHA DO TEMPO — DÉCADAS DINÂMICAS ──
-const photos = [
-  { label: 'Família reunida', meta: '1952', year: 1952, families: ['Negrucci', 'Cantowitz'] },
-  { label: 'Retrato de estúdio', meta: 'circa 1955', year: 1955, families: ['Negrucci'] },
-  { label: 'Passeio no parque', meta: '1958', year: 1958, families: ['Cantowitz'] },
-  { label: 'Aniversário', meta: '1961', year: 1961, families: ['Negrucci'] },
-  { label: 'Viagem', meta: '1964', year: 1964, families: ['Cantowitz'] },
-  { label: 'Casamento', meta: '1967', year: 1967, families: ['Negrucci', 'Cantowitz'] },
-  { label: 'Natal em família', meta: '1969', year: 1969, families: ['Negrucci'] },
-  { label: 'Foto de formatura', meta: '1972', year: 1972, families: ['Cantowitz'] },
-  { label: 'Churrasco de domingo', meta: '1975', year: 1975, families: ['Negrucci'] },
-  { label: 'Crianças brincando', meta: '1978', year: 1978, families: ['Negrucci', 'Cantowitz'] },
-  { label: 'Festa de aniversário', meta: '1982', year: 1982, families: ['Cantowitz'] },
-  { label: 'Verão na praia', meta: '1985', year: 1985, families: ['Negrucci'] },
-  { label: 'Reunião familiar', meta: '1988', year: 1988, families: ['Negrucci', 'Cantowitz'] },
-  { label: 'Fim de ano', meta: '1989', year: 1989, families: ['Cantowitz'] },
-  { label: 'Viagem em família', meta: '1991', year: 1991, families: ['Negrucci'] },
-  { label: 'Formatura', meta: '1994', year: 1994, families: ['Cantowitz'] },
-  { label: 'Casamento', meta: '1997', year: 1997, families: ['Negrucci', 'Cantowitz'] },
-];
-
-function renderTimeline() {
+// ── LINHA DO TEMPO — busca do Google Drive ──
+async function renderTimeline() {
   const container = document.getElementById('timeline-decades');
-  container.innerHTML = '';
+  container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">carregando fotos…</p>';
 
-  const filtered = timelineFamilyFilter === 'todos'
-    ? photos
-    : photos.filter(p => p.families && p.families.includes(timelineFamilyFilter));
+  try {
+    // busca subpastas (álbuns) na raiz
+    const folders = await driveListFiles(DRIVE_ROOT_ID, 'application/vnd.google-apps.folder');
+    const allPhotos = [];
 
-  const groups = {};
-  filtered.forEach(p => {
-    const decade = Math.floor(p.year / 10) * 10 + 's';
-    if (!groups[decade]) groups[decade] = [];
-    groups[decade].push(p);
-  });
+    for (const folder of folders) {
+      const files = await driveListFiles(folder.id);
+      const images = files.filter(f => f.mimeType && f.mimeType.startsWith('image/'));
+      // tenta extrair ano do nome da pasta ex: "1968-06_casamento" ou "1968"
+      const yearMatch = folder.name.match(/\b(1[89]\d{2}|20\d{2})\b/);
+      const year = yearMatch ? parseInt(yearMatch[1]) : null;
+      images.forEach(img => {
+        allPhotos.push({ id: img.id, label: folder.name, meta: year ? String(year) : '—', year: year || 9999, families: [] });
+      });
+    }
 
-  if (Object.keys(groups).length === 0) {
-    container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhuma foto encontrada para este filtro.</p>';
-    return;
-  }
-
-  Object.keys(groups).sort((a, b) => parseInt(a) - parseInt(b)).forEach(decade => {
-    const block = document.createElement('div');
-    block.className = 'decade-block';
-    block.innerHTML = `<div class="decade-label"><span>${decade}</span></div><div class="photo-grid"></div>`;
-    container.appendChild(block);
-
-    const grid = block.querySelector('.photo-grid');
-    groups[decade].forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'photo-card';
-      card.innerHTML = `
-        <div class="photo-placeholder">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>em breve</span>
-        </div>
-        <div class="photo-overlay">
-          <p class="photo-caption">${item.label}<br><span style="opacity:.7">${item.meta}</span></p>
-        </div>`;
-      card.onclick = () => openLightbox(item.label, item.meta);
-      grid.appendChild(card);
+    // também busca fotos soltas na raiz
+    const rootFiles = await driveListFiles(DRIVE_ROOT_ID);
+    const rootImages = rootFiles.filter(f => f.mimeType && f.mimeType.startsWith('image/'));
+    rootImages.forEach(img => {
+      allPhotos.push({ id: img.id, label: img.name, meta: '—', year: 9999, families: [] });
     });
-  });
+
+    const filtered = timelineFamilyFilter === 'todos'
+      ? allPhotos
+      : allPhotos.filter(p => p.families.includes(timelineFamilyFilter));
+
+    container.innerHTML = '';
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhuma foto encontrada.</p>';
+      return;
+    }
+
+    const groups = {};
+    filtered.forEach(p => {
+      const decade = p.year === 9999 ? 'sem data' : Math.floor(p.year / 10) * 10 + 's';
+      if (!groups[decade]) groups[decade] = [];
+      groups[decade].push(p);
+    });
+
+    Object.keys(groups).sort((a, b) => {
+      if (a === 'sem data') return 1;
+      if (b === 'sem data') return -1;
+      return parseInt(a) - parseInt(b);
+    }).forEach(decade => {
+      const block = document.createElement('div');
+      block.className = 'decade-block';
+      block.innerHTML = `<div class="decade-label"><span>${decade}</span></div><div class="photo-grid"></div>`;
+      container.appendChild(block);
+      const grid = block.querySelector('.photo-grid');
+      groups[decade].forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'photo-card';
+        card.innerHTML = `
+          <img src="${driveThumb(item.id)}" alt="${item.label}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+          <div class="photo-overlay">
+            <p class="photo-caption">${item.label}<br><span style="opacity:.7">${item.meta}</span></p>
+          </div>`;
+        card.onclick = () => openLightbox(driveFullImg(item.id), item.label, item.meta);
+        grid.appendChild(card);
+      });
+    });
+
+  } catch(e) {
+    container.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">erro ao carregar fotos. verifique a conexão.</p>';
+    console.error(e);
+  }
 }
 
 // ── FILTRO FAMÍLIA ──
@@ -1443,10 +1589,88 @@ function renderDocs() {
 
 renderDocs();
 
+// ── VÍDEOS ──
+let videos = JSON.parse(localStorage.getItem('nc_videos') || '[]');
+
+function getYouTubeId(url) {
+  const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+function openNewVideo() {
+  document.getElementById('new-video-form').style.display = 'block';
+  document.getElementById('new-video-title').focus();
+}
+
+function closeNewVideo() {
+  document.getElementById('new-video-form').style.display = 'none';
+  document.getElementById('new-video-title').value = '';
+  document.getElementById('new-video-url').value = '';
+  document.getElementById('new-video-year').value = '';
+  document.getElementById('new-video-desc').value = '';
+}
+
+function saveVideo() {
+  const title = document.getElementById('new-video-title').value.trim();
+  const url = document.getElementById('new-video-url').value.trim();
+  const year = parseInt(document.getElementById('new-video-year').value) || null;
+  const desc = document.getElementById('new-video-desc').value.trim();
+  if (!title || !url) { return; }
+  const vid = getYouTubeId(url);
+  if (!vid) { alert('Link do YouTube inválido.'); return; }
+  videos.push({ id: Date.now(), title, vid, year, desc });
+  localStorage.setItem('nc_videos', JSON.stringify(videos));
+  closeNewVideo();
+  renderVideos();
+}
+
+function deleteVideo(id) {
+  videos = videos.filter(v => v.id !== id);
+  localStorage.setItem('nc_videos', JSON.stringify(videos));
+  renderVideos();
+}
+
+function renderVideos() {
+  const query = (document.getElementById('video-search').value || '').toLowerCase().trim();
+  const grid = document.getElementById('video-grid');
+  grid.innerHTML = '';
+
+  let filtered = videos;
+  if (query) {
+    filtered = filtered.filter(v => {
+      const h = [v.title, v.desc, v.year ? String(v.year) : ''].join(' ').toLowerCase();
+      return query.split(' ').every(w => h.includes(w));
+    });
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<p style="font-family:\'Lora\',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;">nenhum vídeo adicionado ainda.</p>';
+    return;
+  }
+
+  filtered.sort((a, b) => (a.year || 9999) - (b.year || 9999)).forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <button onclick="deleteVideo(${v.id})" style="position:absolute;top:8px;right:8px;background:rgba(44,26,14,0.7);border:none;color:var(--cream);width:22px;height:22px;border-radius:50%;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;line-height:1;">×</button>
+      <iframe class="video-embed" src="https://www.youtube.com/embed/${v.vid}" allowfullscreen loading="lazy"></iframe>
+      <div class="video-info">
+        <p class="video-title">${v.title}</p>
+        ${v.year ? `<p class="video-year">${v.year}</p>` : ''}
+        ${v.desc ? `<p class="video-desc">${v.desc}</p>` : ''}
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+renderVideos();
+
 // ── LIGHTBOX ──
-function openLightbox(title, meta) {
+function openLightbox(imgUrl, title, meta) {
+  const ph = document.getElementById('lb-placeholder');
+  ph.innerHTML = `<img src="${imgUrl}" style="max-width:100%;max-height:70vh;object-fit:contain;border-radius:2px;" alt="${title}">`;
   document.getElementById('lb-title').textContent = title;
-  document.getElementById('lb-meta').textContent = meta;
+  document.getElementById('lb-meta').textContent = meta || '';
   document.getElementById('lightbox').classList.add('open');
 }
 
